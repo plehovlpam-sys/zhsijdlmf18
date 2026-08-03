@@ -22,12 +22,14 @@
             background-color: #ffffff;
             color: #000000;
             -webkit-font-smoothing: antialiased;
+            touch-action: none;
         }
 
         body {
             display: flex;
             flex-direction: column;
             position: relative;
+            overflow: hidden;
         }
 
         .scroll-content {
@@ -39,9 +41,10 @@
             padding-bottom: 200px;
             position: relative;
             z-index: 1;
+            touch-action: pan-y;
         }
 
-        /* Градиентное затухание снизу — более резкое и низкое */
+        /* Градиентное затухание снизу */
         .scroll-content::after {
             content: '';
             position: fixed;
@@ -195,6 +198,8 @@
             flex-shrink: 0;
         }
 
+        /* ========== КАРТИНКА С ЭФФЕКТАМИ ========== */
+
         .footer-image {
             position: fixed;
             bottom: 0;
@@ -204,7 +209,16 @@
             width: 100%;
             line-height: 0;
             background-color: transparent;
-            pointer-events: none;
+            pointer-events: auto;
+            cursor: grab;
+            touch-action: none;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: translateY(0) scale(1);
+            will-change: transform;
+        }
+
+        .footer-image:active {
+            cursor: grabbing;
         }
 
         .footer-image img {
@@ -212,6 +226,31 @@
             width: 100%;
             height: auto;
             background-color: transparent;
+            pointer-events: none;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        /* Белое градиентное пятно при нажатии */
+        .ripple-spot {
+            position: fixed;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.6) 40%, rgba(255,255,255,0) 70%);
+            pointer-events: none;
+            z-index: 150;
+            transform: translate(-50%, -50%) scale(0);
+            animation: rippleFade 0.8s ease-out forwards;
+        }
+
+        @keyframes rippleFade {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(4);
+                opacity: 0;
+            }
         }
 
         @media (max-width: 380px) {
@@ -371,9 +410,170 @@
         <div style="height: 20px;"></div>
     </div>
 
-    <div class="footer-image animate-fade">
-        <img src="/bdufm2/shawerma5.png">
+    <!-- Картинка с эффектами -->
+    <div class="footer-image animate-fade" id="footerImage">
+        <img src="/bdufm2/shawerma5.png" id="footerImg">
     </div>
+
+    <script>
+        (function() {
+            const footer = document.getElementById('footerImage');
+            const img = document.getElementById('footerImg');
+
+            // ===== ЭФФЕКТ НАЖАТИЯ =====
+            footer.addEventListener('click', function(e) {
+                // Создаём белое градиентное пятно
+                const spot = document.createElement('div');
+                spot.className = 'ripple-spot';
+                
+                // Размер пятна
+                const size = Math.min(window.innerWidth, window.innerHeight) * 0.3;
+                spot.style.width = size + 'px';
+                spot.style.height = size + 'px';
+                
+                // Позиция по клику
+                const rect = footer.getBoundingClientRect();
+                const x = e.clientX || (rect.left + rect.width / 2);
+                const y = e.clientY || (rect.top + rect.height / 2);
+                spot.style.left = x + 'px';
+                spot.style.top = y + 'px';
+                
+                document.body.appendChild(spot);
+                
+                // Удаляем после анимации
+                setTimeout(() => {
+                    if (spot.parentNode) spot.remove();
+                }, 900);
+            });
+
+            // ===== ЖЕЛЕ-ЭФФЕКТ ПРИ ПЕРЕТАСКИВАНИИ =====
+            let isDragging = false;
+            let startY = 0;
+            let currentY = 0;
+            let dragOffset = 0;
+            let animationFrame = null;
+
+            // Для отслеживания касаний на мобильных
+            let touchStartY = 0;
+            let touchCurrentY = 0;
+
+            // Получаем текущее смещение
+            function getOffset() {
+                return dragOffset;
+            }
+
+            // Обновляем трансформацию
+            function updateTransform(offset) {
+                // Ограничиваем смещение (максимум 40px вниз)
+                const clamped = Math.max(0, Math.min(offset, 40));
+                const scale = 1 - (clamped / 120); // небольшое сжатие
+                footer.style.transform = `translateY(${clamped}px) scale(${Math.max(0.92, scale)})`;
+            }
+
+            // Анимация возврата
+            function snapBack() {
+                if (animationFrame) cancelAnimationFrame(animationFrame);
+                
+                const startOffset = dragOffset;
+                const duration = 400;
+                const startTime = performance.now();
+                
+                function animateSnap(time) {
+                    const elapsed = time - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    
+                    // Пружинящая кривая
+                    const easeOutBack = 1 - Math.pow(1 - progress, 3) * Math.cos(progress * Math.PI * 0.3);
+                    const currentOffset = startOffset * (1 - easeOutBack);
+                    
+                    dragOffset = currentOffset;
+                    updateTransform(currentOffset);
+                    
+                    if (progress < 1) {
+                        animationFrame = requestAnimationFrame(animateSnap);
+                    } else {
+                        dragOffset = 0;
+                        updateTransform(0);
+                        animationFrame = null;
+                    }
+                }
+                
+                animationFrame = requestAnimationFrame(animateSnap);
+            }
+
+            // === Mouse events ===
+            footer.addEventListener('mousedown', function(e) {
+                if (e.button !== 0) return;
+                isDragging = true;
+                startY = e.clientY;
+                currentY = e.clientY;
+                footer.style.cursor = 'grabbing';
+                if (animationFrame) {
+                    cancelAnimationFrame(animationFrame);
+                    animationFrame = null;
+                }
+                e.preventDefault();
+            });
+
+            document.addEventListener('mousemove', function(e) {
+                if (!isDragging) return;
+                currentY = e.clientY;
+                const delta = currentY - startY;
+                dragOffset = Math.max(0, delta);
+                updateTransform(dragOffset);
+                e.preventDefault();
+            });
+
+            document.addEventListener('mouseup', function(e) {
+                if (!isDragging) return;
+                isDragging = false;
+                footer.style.cursor = 'grab';
+                snapBack();
+                e.preventDefault();
+            });
+
+            // === Touch events ===
+            footer.addEventListener('touchstart', function(e) {
+                const touch = e.touches[0];
+                if (!touch) return;
+                isDragging = true;
+                touchStartY = touch.clientY;
+                touchCurrentY = touch.clientY;
+                if (animationFrame) {
+                    cancelAnimationFrame(animationFrame);
+                    animationFrame = null;
+                }
+                // Предотвращаем скролл при перетаскивании картинки
+                e.preventDefault();
+            }, { passive: false });
+
+            footer.addEventListener('touchmove', function(e) {
+                if (!isDragging) return;
+                const touch = e.touches[0];
+                if (!touch) return;
+                touchCurrentY = touch.clientY;
+                const delta = touchCurrentY - touchStartY;
+                dragOffset = Math.max(0, delta);
+                updateTransform(dragOffset);
+                e.preventDefault();
+            }, { passive: false });
+
+            footer.addEventListener('touchend', function(e) {
+                if (!isDragging) return;
+                isDragging = false;
+                snapBack();
+                e.preventDefault();
+            }, { passive: false });
+
+            footer.addEventListener('touchcancel', function(e) {
+                if (!isDragging) return;
+                isDragging = false;
+                snapBack();
+                e.preventDefault();
+            }, { passive: false });
+
+        })();
+    </script>
 
 </body>
 </html>
