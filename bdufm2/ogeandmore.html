@@ -22,7 +22,6 @@
             background-color: #ffffff;
             color: #000000;
             -webkit-font-smoothing: antialiased;
-            touch-action: none;
         }
 
         body {
@@ -41,6 +40,7 @@
             padding-bottom: 200px;
             position: relative;
             z-index: 1;
+            height: 100%;
             touch-action: pan-y;
         }
 
@@ -212,8 +212,8 @@
             pointer-events: auto;
             cursor: grab;
             touch-action: none;
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            transform: translateY(0) scale(1);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: translate(0, 0) scale(1);
             will-change: transform;
         }
 
@@ -235,11 +235,11 @@
         .ripple-spot {
             position: fixed;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.6) 40%, rgba(255,255,255,0) 70%);
+            background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.5) 40%, rgba(255,255,255,0) 70%);
             pointer-events: none;
             z-index: 150;
             transform: translate(-50%, -50%) scale(0);
-            animation: rippleFade 0.8s ease-out forwards;
+            animation: rippleFade 0.7s ease-out forwards;
         }
 
         @keyframes rippleFade {
@@ -248,7 +248,7 @@
                 opacity: 1;
             }
             100% {
-                transform: translate(-50%, -50%) scale(4);
+                transform: translate(-50%, -50%) scale(5);
                 opacity: 0;
             }
         }
@@ -276,7 +276,7 @@
 </head>
 <body>
 
-    <div class="scroll-content">
+    <div class="scroll-content" id="scrollContent">
         <div class="animate-combo delay-1">
             <div class="page-title">ОГЭ</div>
         </div>
@@ -418,7 +418,7 @@
     <script>
         (function() {
             const footer = document.getElementById('footerImage');
-            const img = document.getElementById('footerImg');
+            const scrollContent = document.getElementById('scrollContent');
 
             // ===== ЭФФЕКТ НАЖАТИЯ =====
             footer.addEventListener('click', function(e) {
@@ -427,14 +427,13 @@
                 spot.className = 'ripple-spot';
                 
                 // Размер пятна
-                const size = Math.min(window.innerWidth, window.innerHeight) * 0.3;
+                const size = Math.min(window.innerWidth, window.innerHeight) * 0.35;
                 spot.style.width = size + 'px';
                 spot.style.height = size + 'px';
                 
                 // Позиция по клику
-                const rect = footer.getBoundingClientRect();
-                const x = e.clientX || (rect.left + rect.width / 2);
-                const y = e.clientY || (rect.top + rect.height / 2);
+                const x = e.clientX || window.innerWidth / 2;
+                const y = e.clientY || window.innerHeight / 2;
                 spot.style.left = x + 'px';
                 spot.style.top = y + 'px';
                 
@@ -443,39 +442,41 @@
                 // Удаляем после анимации
                 setTimeout(() => {
                     if (spot.parentNode) spot.remove();
-                }, 900);
+                }, 800);
             });
 
-            // ===== ЖЕЛЕ-ЭФФЕКТ ПРИ ПЕРЕТАСКИВАНИИ =====
+            // ===== ЖЕЛЕ-ЭФФЕКТ ПРИ ПЕРЕТАСКИВАНИИ (ВО ВСЕ СТОРОНЫ) =====
             let isDragging = false;
+            let startX = 0;
             let startY = 0;
-            let currentY = 0;
-            let dragOffset = 0;
+            let currentOffsetX = 0;
+            let currentOffsetY = 0;
+            let dragOffsetX = 0;
+            let dragOffsetY = 0;
             let animationFrame = null;
 
-            // Для отслеживания касаний на мобильных
-            let touchStartY = 0;
-            let touchCurrentY = 0;
-
             // Получаем текущее смещение
-            function getOffset() {
-                return dragOffset;
-            }
+            function getOffsetX() { return dragOffsetX; }
+            function getOffsetY() { return dragOffsetY; }
 
             // Обновляем трансформацию
-            function updateTransform(offset) {
-                // Ограничиваем смещение (максимум 40px вниз)
-                const clamped = Math.max(0, Math.min(offset, 40));
-                const scale = 1 - (clamped / 120); // небольшое сжатие
-                footer.style.transform = `translateY(${clamped}px) scale(${Math.max(0.92, scale)})`;
+            function updateTransform(offsetX, offsetY) {
+                // Ограничиваем смещение (максимум 30px в любую сторону)
+                const clampedX = Math.max(-30, Math.min(offsetX, 30));
+                const clampedY = Math.max(-30, Math.min(offsetY, 30));
+                // Небольшое масштабирование при смещении
+                const dist = Math.sqrt(clampedX * clampedX + clampedY * clampedY);
+                const scale = 1 - (dist / 200);
+                footer.style.transform = `translate(${clampedX}px, ${clampedY}px) scale(${Math.max(0.88, scale)})`;
             }
 
             // Анимация возврата
             function snapBack() {
                 if (animationFrame) cancelAnimationFrame(animationFrame);
                 
-                const startOffset = dragOffset;
-                const duration = 400;
+                const startX = dragOffsetX;
+                const startY = dragOffsetY;
+                const duration = 500;
                 const startTime = performance.now();
                 
                 function animateSnap(time) {
@@ -484,16 +485,19 @@
                     
                     // Пружинящая кривая
                     const easeOutBack = 1 - Math.pow(1 - progress, 3) * Math.cos(progress * Math.PI * 0.3);
-                    const currentOffset = startOffset * (1 - easeOutBack);
+                    const currentX = startX * (1 - easeOutBack);
+                    const currentY = startY * (1 - easeOutBack);
                     
-                    dragOffset = currentOffset;
-                    updateTransform(currentOffset);
+                    dragOffsetX = currentX;
+                    dragOffsetY = currentY;
+                    updateTransform(currentX, currentY);
                     
                     if (progress < 1) {
                         animationFrame = requestAnimationFrame(animateSnap);
                     } else {
-                        dragOffset = 0;
-                        updateTransform(0);
+                        dragOffsetX = 0;
+                        dragOffsetY = 0;
+                        updateTransform(0, 0);
                         animationFrame = null;
                     }
                 }
@@ -505,8 +509,10 @@
             footer.addEventListener('mousedown', function(e) {
                 if (e.button !== 0) return;
                 isDragging = true;
+                startX = e.clientX;
                 startY = e.clientY;
-                currentY = e.clientY;
+                dragOffsetX = currentOffsetX;
+                dragOffsetY = currentOffsetY;
                 footer.style.cursor = 'grabbing';
                 if (animationFrame) {
                     cancelAnimationFrame(animationFrame);
@@ -517,33 +523,42 @@
 
             document.addEventListener('mousemove', function(e) {
                 if (!isDragging) return;
-                currentY = e.clientY;
-                const delta = currentY - startY;
-                dragOffset = Math.max(0, delta);
-                updateTransform(dragOffset);
+                const deltaX = e.clientX - startX;
+                const deltaY = e.clientY - startY;
+                const newX = currentOffsetX + deltaX;
+                const newY = currentOffsetY + deltaY;
+                dragOffsetX = newX;
+                dragOffsetY = newY;
+                updateTransform(newX, newY);
                 e.preventDefault();
             });
 
             document.addEventListener('mouseup', function(e) {
                 if (!isDragging) return;
                 isDragging = false;
+                currentOffsetX = dragOffsetX;
+                currentOffsetY = dragOffsetY;
                 footer.style.cursor = 'grab';
                 snapBack();
                 e.preventDefault();
             });
 
             // === Touch events ===
+            let touchStartX = 0;
+            let touchStartY = 0;
+
             footer.addEventListener('touchstart', function(e) {
                 const touch = e.touches[0];
                 if (!touch) return;
                 isDragging = true;
+                touchStartX = touch.clientX;
                 touchStartY = touch.clientY;
-                touchCurrentY = touch.clientY;
+                dragOffsetX = currentOffsetX;
+                dragOffsetY = currentOffsetY;
                 if (animationFrame) {
                     cancelAnimationFrame(animationFrame);
                     animationFrame = null;
                 }
-                // Предотвращаем скролл при перетаскивании картинки
                 e.preventDefault();
             }, { passive: false });
 
@@ -551,16 +566,21 @@
                 if (!isDragging) return;
                 const touch = e.touches[0];
                 if (!touch) return;
-                touchCurrentY = touch.clientY;
-                const delta = touchCurrentY - touchStartY;
-                dragOffset = Math.max(0, delta);
-                updateTransform(dragOffset);
+                const deltaX = touch.clientX - touchStartX;
+                const deltaY = touch.clientY - touchStartY;
+                const newX = currentOffsetX + deltaX;
+                const newY = currentOffsetY + deltaY;
+                dragOffsetX = newX;
+                dragOffsetY = newY;
+                updateTransform(newX, newY);
                 e.preventDefault();
             }, { passive: false });
 
             footer.addEventListener('touchend', function(e) {
                 if (!isDragging) return;
                 isDragging = false;
+                currentOffsetX = dragOffsetX;
+                currentOffsetY = dragOffsetY;
                 snapBack();
                 e.preventDefault();
             }, { passive: false });
@@ -568,6 +588,8 @@
             footer.addEventListener('touchcancel', function(e) {
                 if (!isDragging) return;
                 isDragging = false;
+                currentOffsetX = dragOffsetX;
+                currentOffsetY = dragOffsetY;
                 snapBack();
                 e.preventDefault();
             }, { passive: false });
