@@ -2,11 +2,11 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Пустая страница</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ОГЭ 2026</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -17,40 +17,151 @@
         html, body {
             height: 100%;
             width: 100%;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 400;
+            background-color: #f2f2f7;
+            color: #000000;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            font-weight: 400;
-            background-color: #ffffff;
             display: flex;
             flex-direction: column;
         }
 
-        .header-image {
-            flex-shrink: 0;
-            width: 100%;
-            line-height: 0;
-            background-color: #ffffff;
-        }
-
-        .header-image img {
-            display: block;
-            width: 100%;
-            height: auto;
-            object-fit: contain;
-        }
-
+        /* iOS-стиль основного контента */
         .content {
             flex: 1 0 auto;
-            background-color: #ffffff;
+            padding: 20px 16px 30px;
+            background-color: #f2f2f7;
+            overflow-y: auto;
         }
 
+        /* Заголовок в стиле iOS */
+        .page-title {
+            font-size: 34px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #000000;
+            margin-bottom: 6px;
+            padding-top: 10px;
+        }
+
+        .page-subtitle {
+            font-size: 16px;
+            font-weight: 400;
+            color: #8e8e93;
+            margin-bottom: 24px;
+            letter-spacing: -0.2px;
+        }
+
+        /* Блоки-секции как в iOS Settings */
+        .section {
+            background-color: #ffffff;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+
+        .section-header {
+            padding: 14px 16px 6px 16px;
+            font-size: 13px;
+            font-weight: 400;
+            color: #8e8e93;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            background-color: #f2f2f7;
+        }
+
+        .section-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            border-bottom: 0.5px solid #e5e5ea;
+            background-color: #ffffff;
+            min-height: 44px;
+        }
+
+        .section-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-label {
+            font-size: 16px;
+            font-weight: 400;
+            color: #000000;
+            letter-spacing: -0.2px;
+        }
+
+        .item-date {
+            font-size: 16px;
+            font-weight: 400;
+            color: #8e8e93;
+            letter-spacing: -0.2px;
+            text-align: right;
+            margin-left: 12px;
+            flex-shrink: 0;
+        }
+
+        .item-day {
+            font-size: 14px;
+            font-weight: 400;
+            color: #8e8e93;
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+
+        /* Строка с предметами (не выбраны) */
+        .subject-placeholder {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 16px 16px 14px 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+
+        .subject-placeholder .placeholder-title {
+            font-size: 15px;
+            font-weight: 500;
+            color: #000000;
+            margin-bottom: 4px;
+            letter-spacing: -0.2px;
+        }
+
+        .subject-placeholder .placeholder-text {
+            font-size: 15px;
+            font-weight: 400;
+            color: #8e8e93;
+            letter-spacing: -0.2px;
+            line-height: 1.4;
+        }
+
+        .subject-placeholder .placeholder-note {
+            font-size: 13px;
+            font-weight: 400;
+            color: #8e8e93;
+            margin-top: 6px;
+            letter-spacing: -0.1px;
+        }
+
+        /* Резервные дни — отдельная секция с отступом сверху */
+        .reserve-section {
+            margin-top: 4px;
+        }
+
+        .reserve-section .section-header {
+            padding-top: 6px;
+        }
+
+        /* Нижняя картинка */
         .footer-image {
             flex-shrink: 0;
             width: 100%;
             line-height: 0;
-            background-color: #ffffff;
+            background-color: #f2f2f7;
         }
 
         .footer-image img {
@@ -58,16 +169,113 @@
             width: 100%;
             height: auto;
             object-fit: contain;
+            background-color: #f2f2f7;
+        }
+
+        /* Адаптив для очень узких экранов */
+        @media (max-width: 380px) {
+            .section-item {
+                flex-wrap: wrap;
+                padding: 10px 14px;
+            }
+            .item-date {
+                margin-left: 0;
+                width: 100%;
+                text-align: left;
+                margin-top: 2px;
+                font-size: 15px;
+            }
+            .item-day {
+                font-size: 13px;
+            }
+        }
+
+        /* Скролл для контента, если много */
+        .content {
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Убираем выделение */
+        .section-item, .subject-placeholder {
+            user-select: none;
         }
     </style>
 </head>
 <body>
-    <div class="header-image">
-        <img src="/bdufm2/lolprof.png">
+    <div class="content">
+        <!-- Заголовок -->
+        <div class="page-title">ОГЭ</div>
+        <div class="page-subtitle">Расписание на 2026 год</div>
+
+        <!-- Основные дни -->
+        <div class="section-header">Основной период</div>
+        <div class="section">
+            <div class="section-item">
+                <span class="item-label">Математика</span>
+                <span class="item-day">вт</span>
+                <span class="item-date">2 июня</span>
+            </div>
+            <div class="section-item">
+                <span class="item-label">Все предметы (кроме русского и математики)</span>
+                <span class="item-day">пт</span>
+                <span class="item-date">5 июня</span>
+            </div>
+            <div class="section-item">
+                <span class="item-label">Иностранные языки, информатика</span>
+                <span class="item-day">сб</span>
+                <span class="item-date">6 июня</span>
+            </div>
+            <div class="section-item">
+                <span class="item-label">Русский язык</span>
+                <span class="item-day">вт</span>
+                <span class="item-date">9 июня</span>
+            </div>
+            <div class="section-item">
+                <span class="item-label">Все предметы (кроме русского и математики)</span>
+                <span class="item-day">вт</span>
+                <span class="item-date">16 июня</span>
+            </div>
+            <div class="section-item">
+                <span class="item-label">Все предметы (кроме русского и математики)</span>
+                <span class="item-day">пт</span>
+                <span class="item-date">19 июня</span>
+            </div>
+        </div>
+
+        <!-- Блок "Предметы не выбраны" -->
+        <div class="subject-placeholder">
+            <div class="placeholder-title">Выбор предметов</div>
+            <div class="placeholder-text">Предметы для сдачи ещё не выбраны учеником</div>
+            <div class="placeholder-note">Выберите предметы в личном кабинете</div>
+        </div>
+
+        <!-- Резервные дни -->
+        <div class="section-header reserve-section">Резервные дни</div>
+        <div class="section">
+            <div class="section-item">
+                <span class="item-label">Математика</span>
+                <span class="item-day">пн</span>
+                <span class="item-date">29 июня</span>
+            </div>
+            <div class="section-item">
+                <span class="item-label">Русский язык</span>
+                <span class="item-day">чт</span>
+                <span class="item-date">2 июля</span>
+            </div>
+            <div class="section-item">
+                <span class="item-label">Все предметы (кроме русского и математики)</span>
+                <span class="item-day">пт</span>
+                <span class="item-date">3 июля</span>
+            </div>
+            <div class="section-item">
+                <span class="item-label">Все предметы (кроме русского и математики)</span>
+                <span class="item-day">пн</span>
+                <span class="item-date">6 июля</span>
+            </div>
+        </div>
     </div>
 
-    <div class="content"></div>
-
+    <!-- Нижняя картинка -->
     <div class="footer-image">
         <img src="/bdufm2/shawerma5.png">
     </div>
