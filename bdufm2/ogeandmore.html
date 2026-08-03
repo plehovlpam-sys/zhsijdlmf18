@@ -207,14 +207,8 @@
             width: 100%;
             line-height: 0;
             background-color: transparent;
-            pointer-events: auto;
-            cursor: grab;
-            touch-action: none;
+            pointer-events: none;
             overflow: visible;
-        }
-
-        .footer-image:active {
-            cursor: grabbing;
         }
 
         .footer-image img {
@@ -222,12 +216,32 @@
             width: 100%;
             height: auto;
             background-color: transparent;
-            pointer-events: none;
             user-select: none;
             -webkit-user-drag: none;
             transform-origin: center bottom;
             transition: none;
             will-change: transform;
+            pointer-events: none;
+        }
+
+        /* Прозрачный слой поверх картинки для ловли кликов */
+        .footer-image .click-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            cursor: grab;
+            pointer-events: auto;
+            touch-action: none;
+            z-index: 10;
+            background: transparent;
+        }
+
+        .footer-image .click-layer:active {
+            cursor: grabbing;
         }
 
         /* Белое градиентное пятно при нажатии */
@@ -409,18 +423,22 @@
         <div style="height: 20px;"></div>
     </div>
 
-    <!-- Картинка с эффектами -->
+    <!-- Картинка с прозрачным слоем поверх -->
     <div class="footer-image animate-fade" id="footerImage">
         <img src="/bdufm2/shawerma5.png" id="footerImg">
+        <div class="click-layer" id="clickLayer"></div>
     </div>
 
     <script>
         (function() {
             const footer = document.getElementById('footerImage');
             const img = document.getElementById('footerImg');
+            const layer = document.getElementById('clickLayer');
 
-            // ===== ЭФФЕКТ НАЖАТИЯ (усиленный) =====
-            footer.addEventListener('click', function(e) {
+            // ===== ЭФФЕКТ НАЖАТИЯ через прозрачный слой =====
+            layer.addEventListener('click', function(e) {
+                console.log('Click detected!');
+                
                 // Белое пятно
                 const spot = document.createElement('div');
                 spot.className = 'ripple-spot';
@@ -440,7 +458,7 @@
                     if (spot.parentNode) spot.remove();
                 }, 800);
 
-                // Усиленный эффект нажатия — увеличение на 3% с пружиной
+                // Увеличение на 3%
                 img.style.transition = 'transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1)';
                 img.style.transform = 'scale(1.03, 1.03)';
                 
@@ -452,7 +470,7 @@
                 }, 250);
             });
 
-            // ===== ЭФФЕКТ РАСТЯЖЕНИЯ (инвертированный) =====
+            // ===== ЭФФЕКТ РАСТЯЖЕНИЯ через прозрачный слой =====
             let isDragging = false;
             let startX = 0;
             let startY = 0;
@@ -494,15 +512,15 @@
                 animationFrame = requestAnimationFrame(animateSnap);
             }
 
-            // === Mouse events ===
-            footer.addEventListener('mousedown', function(e) {
+            // === Mouse events на слое ===
+            layer.addEventListener('mousedown', function(e) {
                 if (e.button !== 0) return;
                 isDragging = true;
                 startX = e.clientX;
                 startY = e.clientY;
                 currentScaleX = 1;
                 currentScaleY = 1;
-                footer.style.cursor = 'grabbing';
+                layer.style.cursor = 'grabbing';
                 if (animationFrame) {
                     cancelAnimationFrame(animationFrame);
                     animationFrame = null;
@@ -513,11 +531,9 @@
             document.addEventListener('mousemove', function(e) {
                 if (!isDragging) return;
                 
-                // ИНВЕРТИРОВАНО: движение вверх (отрицательный deltaY) → растяжение вверх (scaleY > 1)
                 const deltaX = -(e.clientX - startX) / 400;
                 const deltaY = -(e.clientY - startY) / 400;
                 
-                // Ограничение 5%
                 const scaleX = Math.max(0.95, Math.min(1.05, 1 + deltaX));
                 const scaleY = Math.max(0.95, Math.min(1.05, 1 + deltaY));
                 
@@ -531,16 +547,16 @@
             document.addEventListener('mouseup', function(e) {
                 if (!isDragging) return;
                 isDragging = false;
-                footer.style.cursor = 'grab';
+                layer.style.cursor = 'grab';
                 snapBack();
                 e.preventDefault();
             });
 
-            // === Touch events ===
+            // === Touch events на слое ===
             let touchStartX = 0;
             let touchStartY = 0;
 
-            footer.addEventListener('touchstart', function(e) {
+            layer.addEventListener('touchstart', function(e) {
                 const touch = e.touches[0];
                 if (!touch) return;
                 isDragging = true;
@@ -555,16 +571,14 @@
                 e.preventDefault();
             }, { passive: false });
 
-            footer.addEventListener('touchmove', function(e) {
+            layer.addEventListener('touchmove', function(e) {
                 if (!isDragging) return;
                 const touch = e.touches[0];
                 if (!touch) return;
                 
-                // ИНВЕРТИРОВАНО
                 const deltaX = -(touch.clientX - touchStartX) / 400;
                 const deltaY = -(touch.clientY - touchStartY) / 400;
                 
-                // Ограничение 5%
                 const scaleX = Math.max(0.95, Math.min(1.05, 1 + deltaX));
                 const scaleY = Math.max(0.95, Math.min(1.05, 1 + deltaY));
                 
@@ -575,14 +589,14 @@
                 e.preventDefault();
             }, { passive: false });
 
-            footer.addEventListener('touchend', function(e) {
+            layer.addEventListener('touchend', function(e) {
                 if (!isDragging) return;
                 isDragging = false;
                 snapBack();
                 e.preventDefault();
             }, { passive: false });
 
-            footer.addEventListener('touchcancel', function(e) {
+            layer.addEventListener('touchcancel', function(e) {
                 if (!isDragging) return;
                 isDragging = false;
                 snapBack();
