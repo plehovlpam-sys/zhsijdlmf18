@@ -226,7 +226,7 @@
             pointer-events: none;
             user-select: none;
             -webkit-user-drag: none;
-            transform-origin: center center;
+            transform-origin: center bottom;
             transition: none;
             will-change: transform;
         }
@@ -419,7 +419,6 @@
         (function() {
             const footer = document.getElementById('footerImage');
             const img = document.getElementById('footerImg');
-            const scrollContent = document.getElementById('scrollContent');
 
             // ===== ЭФФЕКТ НАЖАТИЯ =====
             footer.addEventListener('click', function(e) {
@@ -448,8 +447,6 @@
             let startY = 0;
             let currentScaleX = 1;
             let currentScaleY = 1;
-            let targetScaleX = 1;
-            let targetScaleY = 1;
             let animationFrame = null;
 
             // Функция плавного возврата
@@ -507,13 +504,13 @@
             document.addEventListener('mousemove', function(e) {
                 if (!isDragging) return;
                 
-                const deltaX = (e.clientX - startX) / 200;
-                const deltaY = (e.clientY - startY) / 200;
+                // Правильное направление: вверх/вниз → scaleY, влево/вправо → scaleX
+                const deltaX = (e.clientX - startX) / 300;
+                const deltaY = (e.clientY - startY) / 300;
                 
-                // Растяжение: вверх/вниз меняет scaleY, влево/вправо меняет scaleX
-                // Ограничиваем растяжение 15%
-                const scaleX = Math.max(0.85, Math.min(1.15, 1 + deltaX));
-                const scaleY = Math.max(0.85, Math.min(1.15, 1 + deltaY));
+                // Ограничиваем растяжение 8% (пониженная интенсивность)
+                const scaleX = Math.max(0.92, Math.min(1.08, 1 + deltaX));
+                const scaleY = Math.max(0.92, Math.min(1.08, 1 + deltaY));
                 
                 currentScaleX = scaleX;
                 currentScaleY = scaleY;
@@ -554,11 +551,13 @@
                 const touch = e.touches[0];
                 if (!touch) return;
                 
-                const deltaX = (touch.clientX - touchStartX) / 200;
-                const deltaY = (touch.clientY - touchStartY) / 200;
+                // Правильное направление: вверх/вниз → scaleY, влево/вправо → scaleX
+                const deltaX = (touch.clientX - touchStartX) / 300;
+                const deltaY = (touch.clientY - touchStartY) / 300;
                 
-                const scaleX = Math.max(0.85, Math.min(1.15, 1 + deltaX));
-                const scaleY = Math.max(0.85, Math.min(1.15, 1 + deltaY));
+                // Ограничиваем растяжение 8% (пониженная интенсивность)
+                const scaleX = Math.max(0.92, Math.min(1.08, 1 + deltaX));
+                const scaleY = Math.max(0.92, Math.min(1.08, 1 + deltaY));
                 
                 currentScaleX = scaleX;
                 currentScaleY = scaleY;
