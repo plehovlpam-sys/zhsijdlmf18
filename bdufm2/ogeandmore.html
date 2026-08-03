@@ -6,7 +6,7 @@
     <title>ОГЭ 2026</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -22,7 +22,6 @@
             background-color: #f2f2f7;
             color: #000000;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
 
         body {
@@ -30,21 +29,21 @@
             flex-direction: column;
         }
 
-        /* iOS-стиль основного контента */
-        .content {
+        .scroll-content {
             flex: 1 0 auto;
+            overflow-y: auto;
             padding: 20px 16px 30px;
             background-color: #f2f2f7;
-            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 120px;
         }
 
-        /* Заголовок в стиле iOS */
         .page-title {
             font-size: 34px;
             font-weight: 700;
             letter-spacing: -0.5px;
             color: #000000;
-            margin-bottom: 6px;
+            margin-bottom: 2px;
             padding-top: 10px;
         }
 
@@ -52,11 +51,10 @@
             font-size: 16px;
             font-weight: 400;
             color: #8e8e93;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             letter-spacing: -0.2px;
         }
 
-        /* Блоки-секции как в iOS Settings */
         .section {
             background-color: #ffffff;
             border-radius: 12px;
@@ -106,59 +104,12 @@
             flex-shrink: 0;
         }
 
-        .item-day {
-            font-size: 14px;
-            font-weight: 400;
-            color: #8e8e93;
-            margin-right: 8px;
-            flex-shrink: 0;
-        }
-
-        /* Строка с предметами (не выбраны) */
-        .subject-placeholder {
-            background-color: #ffffff;
-            border-radius: 12px;
-            padding: 16px 16px 14px 16px;
-            margin-bottom: 20px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-        }
-
-        .subject-placeholder .placeholder-title {
-            font-size: 15px;
-            font-weight: 500;
-            color: #000000;
-            margin-bottom: 4px;
-            letter-spacing: -0.2px;
-        }
-
-        .subject-placeholder .placeholder-text {
-            font-size: 15px;
-            font-weight: 400;
-            color: #8e8e93;
-            letter-spacing: -0.2px;
-            line-height: 1.4;
-        }
-
-        .subject-placeholder .placeholder-note {
-            font-size: 13px;
-            font-weight: 400;
-            color: #8e8e93;
-            margin-top: 6px;
-            letter-spacing: -0.1px;
-        }
-
-        /* Резервные дни — отдельная секция с отступом сверху */
-        .reserve-section {
-            margin-top: 4px;
-        }
-
-        .reserve-section .section-header {
-            padding-top: 6px;
-        }
-
-        /* Нижняя картинка */
         .footer-image {
-            flex-shrink: 0;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
             width: 100%;
             line-height: 0;
             background-color: #f2f2f7;
@@ -172,7 +123,6 @@
             background-color: #f2f2f7;
         }
 
-        /* Адаптив для очень узких экранов */
         @media (max-width: 380px) {
             .section-item {
                 flex-wrap: wrap;
@@ -185,25 +135,15 @@
                 margin-top: 2px;
                 font-size: 15px;
             }
-            .item-day {
-                font-size: 13px;
+            .scroll-content {
+                padding-bottom: 100px;
             }
-        }
-
-        /* Скролл для контента, если много */
-        .content {
-            -webkit-overflow-scrolling: touch;
-        }
-
-        /* Убираем выделение */
-        .section-item, .subject-placeholder {
-            user-select: none;
         }
     </style>
 </head>
 <body>
-    <div class="content">
-        <!-- Заголовок -->
+
+    <div class="scroll-content">
         <div class="page-title">ОГЭ</div>
         <div class="page-subtitle">Расписание на 2026 год</div>
 
@@ -212,72 +152,74 @@
         <div class="section">
             <div class="section-item">
                 <span class="item-label">Математика</span>
-                <span class="item-day">вт</span>
                 <span class="item-date">2 июня</span>
             </div>
             <div class="section-item">
                 <span class="item-label">Все предметы (кроме русского и математики)</span>
-                <span class="item-day">пт</span>
                 <span class="item-date">5 июня</span>
             </div>
             <div class="section-item">
                 <span class="item-label">Иностранные языки, информатика</span>
-                <span class="item-day">сб</span>
                 <span class="item-date">6 июня</span>
             </div>
             <div class="section-item">
                 <span class="item-label">Русский язык</span>
-                <span class="item-day">вт</span>
                 <span class="item-date">9 июня</span>
             </div>
             <div class="section-item">
                 <span class="item-label">Все предметы (кроме русского и математики)</span>
-                <span class="item-day">вт</span>
                 <span class="item-date">16 июня</span>
             </div>
             <div class="section-item">
                 <span class="item-label">Все предметы (кроме русского и математики)</span>
-                <span class="item-day">пт</span>
                 <span class="item-date">19 июня</span>
             </div>
         </div>
 
-        <!-- Блок "Предметы не выбраны" -->
-        <div class="subject-placeholder">
-            <div class="placeholder-title">Выбор предметов</div>
-            <div class="placeholder-text">Предметы для сдачи ещё не выбраны учеником</div>
-            <div class="placeholder-note">Выберите предметы в личном кабинете</div>
-        </div>
-
         <!-- Резервные дни -->
-        <div class="section-header reserve-section">Резервные дни</div>
+        <div class="section-header">Резервные дни</div>
         <div class="section">
             <div class="section-item">
                 <span class="item-label">Математика</span>
-                <span class="item-day">пн</span>
                 <span class="item-date">29 июня</span>
             </div>
             <div class="section-item">
                 <span class="item-label">Русский язык</span>
-                <span class="item-day">чт</span>
                 <span class="item-date">2 июля</span>
             </div>
             <div class="section-item">
                 <span class="item-label">Все предметы (кроме русского и математики)</span>
-                <span class="item-day">пт</span>
                 <span class="item-date">3 июля</span>
             </div>
             <div class="section-item">
                 <span class="item-label">Все предметы (кроме русского и математики)</span>
-                <span class="item-day">пн</span>
                 <span class="item-date">6 июля</span>
             </div>
         </div>
+
+        <!-- Устное собеседование -->
+        <div class="section-header">Итоговое собеседование</div>
+        <div class="section">
+            <div class="section-item">
+                <span class="item-label">Основная дата</span>
+                <span class="item-date">11 февраля 2026</span>
+            </div>
+            <div class="section-item">
+                <span class="item-label">Резервная дата 1</span>
+                <span class="item-date">11 марта 2026</span>
+            </div>
+            <div class="section-item">
+                <span class="item-label">Резервная дата 2</span>
+                <span class="item-date">20 апреля 2026</span>
+            </div>
+        </div>
+
+        <div style="height: 20px;"></div>
     </div>
 
-    <!-- Нижняя картинка -->
     <div class="footer-image">
         <img src="/bdufm2/shawerma5.png">
     </div>
+
 </body>
 </html>
