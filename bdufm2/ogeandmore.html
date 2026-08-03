@@ -280,7 +280,7 @@
             <div class="page-title">ОГЭ</div>
         </div>
         <div class="animate-combo delay-2">
-            <div class="page-subtitle">Распицсание на 2027 год</div>
+            <div class="page-subtitle">Расписание на 2027 год</div>
         </div>
 
         <div class="animate-combo delay-3">
@@ -514,7 +514,6 @@
                 if (!isDragging) return;
                 
                 // ИНВЕРТИРОВАНО: движение вверх (отрицательный deltaY) → растяжение вверх (scaleY > 1)
-                // движение вниз (положительный deltaY) → сжатие вниз (scaleY < 1)
                 const deltaX = -(e.clientX - startX) / 400;
                 const deltaY = -(e.clientY - startY) / 400;
                 
