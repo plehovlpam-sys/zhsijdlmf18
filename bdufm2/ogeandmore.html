@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ОГЭ 2026</title>
+    <title>ОГЭ 2027</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -36,20 +36,20 @@
             padding: 20px 16px 30px;
             background-color: #ffffff;
             -webkit-overflow-scrolling: touch;
-            padding-bottom: 160px;
+            padding-bottom: 200px;
             position: relative;
             z-index: 1;
         }
 
-        /* Градиентное затухание снизу */
+        /* Градиентное затухание снизу — более заметное */
         .scroll-content::after {
             content: '';
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            height: 120px;
-            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 80%);
+            height: 180px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 60%);
             pointer-events: none;
             z-index: 50;
         }
@@ -95,13 +95,7 @@
             letter-spacing: -0.2px;
         }
 
-        .section {
-            background-color: #f2f2f7;
-            border-radius: 24px;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-
+        /* Заголовки секций без серого фона */
         .section-header {
             padding: 14px 16px 6px 16px;
             font-size: 13px;
@@ -109,7 +103,14 @@
             color: #8e8e93;
             text-transform: uppercase;
             letter-spacing: 0.3px;
+            background-color: transparent;
+        }
+
+        .section {
             background-color: #f2f2f7;
+            border-radius: 24px;
+            margin-bottom: 20px;
+            overflow: hidden;
         }
 
         .section-item {
@@ -176,10 +177,10 @@
                 font-size: 15px;
             }
             .scroll-content {
-                padding-bottom: 140px;
+                padding-bottom: 180px;
             }
             .scroll-content::after {
-                height: 100px;
+                height: 150px;
             }
         }
     </style>
@@ -188,12 +189,12 @@
 
     <div class="scroll-content">
         <div class="page-title">ОГЭ</div>
-        <div class="page-subtitle">Расписание на 2026 год</div>
+        <div class="page-subtitle">Расписание на 2027 год</div>
 
         <!-- Ближайший экзамен -->
         <div class="nearest-exam">
             <span class="label">Ближайший экзамен</span>
-            <span class="value">Устное собеседование — 11 февраля 2026</span>
+            <span class="value">Устное собеседование — 10 февраля 2027</span>
         </div>
 
         <!-- Основные дни -->
@@ -251,15 +252,15 @@
         <div class="section">
             <div class="section-item">
                 <span class="item-label">Основная дата</span>
-                <span class="item-date">11 февраля 2026</span>
+                <span class="item-date">10 февраля 2027</span>
             </div>
             <div class="section-item">
                 <span class="item-label">Резервная дата 1</span>
-                <span class="item-date">11 марта 2026</span>
+                <span class="item-date">10 марта 2027</span>
             </div>
             <div class="section-item">
                 <span class="item-label">Резервная дата 2</span>
-                <span class="item-date">20 апреля 2026</span>
+                <span class="item-date">19 апреля 2027</span>
             </div>
         </div>
 
