@@ -41,18 +41,73 @@
             z-index: 1;
         }
 
-        /* Градиентное затухание снизу — более заметное */
+        /* Градиентное затухание снизу */
         .scroll-content::after {
             content: '';
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            height: 90px;
-            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 40%);
+            height: 180px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 60%);
             pointer-events: none;
             z-index: 50;
         }
+
+        /* ========== АНИМАЦИИ ========== */
+
+        /* Базовый класс для всех элементов с комбо-анимацией */
+        .animate-combo {
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+            filter: blur(8px);
+            animation: comboAnim 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes comboAnim {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+                filter: blur(8px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0);
+            }
+        }
+
+        /* Задержки для элементов */
+        .delay-1 { animation-delay: 0.05s; }
+        .delay-2 { animation-delay: 0.10s; }
+        .delay-3 { animation-delay: 0.15s; }
+        .delay-4 { animation-delay: 0.20s; }
+        .delay-5 { animation-delay: 0.25s; }
+        .delay-6 { animation-delay: 0.30s; }
+        .delay-7 { animation-delay: 0.35s; }
+        .delay-8 { animation-delay: 0.40s; }
+        .delay-9 { animation-delay: 0.45s; }
+        .delay-10 { animation-delay: 0.50s; }
+        .delay-11 { animation-delay: 0.55s; }
+        .delay-12 { animation-delay: 0.60s; }
+        .delay-13 { animation-delay: 0.65s; }
+        .delay-14 { animation-delay: 0.70s; }
+        .delay-15 { animation-delay: 0.75s; }
+        .delay-16 { animation-delay: 0.80s; }
+
+        /* Анимация для картинки — простой fade in */
+        .animate-fade {
+            opacity: 0;
+            animation: fadeIn 1.2s ease forwards;
+            animation-delay: 0.3s;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* ========== СТИЛИ ЭЛЕМЕНТОВ ========== */
 
         .page-title {
             font-size: 34px;
@@ -95,7 +150,6 @@
             letter-spacing: -0.2px;
         }
 
-        /* Заголовки секций без серого фона */
         .section-header {
             padding: 14px 16px 6px 16px;
             font-size: 13px;
@@ -144,7 +198,6 @@
             flex-shrink: 0;
         }
 
-        /* Картинка без фона */
         .footer-image {
             position: fixed;
             bottom: 0;
@@ -188,87 +241,146 @@
 <body>
 
     <div class="scroll-content">
-        <div class="page-title">ОГЭ</div>
-        <div class="page-subtitle">Расписание на 2027 год</div>
+        <!-- Заголовки с комбо-анимацией -->
+        <div class="animate-combo delay-1">
+            <div class="page-title">ОГЭ</div>
+        </div>
+        <div class="animate-combo delay-2">
+            <div class="page-subtitle">Расписание на 2027 год</div>
+        </div>
 
         <!-- Ближайший экзамен -->
-        <div class="nearest-exam">
-            <span class="label">Ближайший экзамен</span>
-            <span class="value">Устное собеседование — 10 февраля 2027</span>
+        <div class="animate-combo delay-3">
+            <div class="nearest-exam">
+                <span class="label">Ближайший экзамен</span>
+                <span class="value">Устное собеседование — 10 февраля 2027</span>
+            </div>
         </div>
 
         <!-- Основные дни -->
-        <div class="section-header">Основной период</div>
-        <div class="section">
-            <div class="section-item">
-                <span class="item-label">Математика</span>
-                <span class="item-date">2 июня</span>
+        <div class="animate-combo delay-4">
+            <div class="section-header">Основной период</div>
+        </div>
+        <div class="animate-combo delay-5">
+            <div class="section">
+                <div class="section-item">
+                    <span class="item-label">Математика</span>
+                    <span class="item-date">2 июня</span>
+                </div>
             </div>
-            <div class="section-item">
-                <span class="item-label">Все предметы (кроме русского и математики)</span>
-                <span class="item-date">5 июня</span>
+        </div>
+        <div class="animate-combo delay-6">
+            <div class="section">
+                <div class="section-item">
+                    <span class="item-label">Все предметы (кроме русского и математики)</span>
+                    <span class="item-date">5 июня</span>
+                </div>
             </div>
-            <div class="section-item">
-                <span class="item-label">Иностранные языки, информатика</span>
-                <span class="item-date">6 июня</span>
+        </div>
+        <div class="animate-combo delay-7">
+            <div class="section">
+                <div class="section-item">
+                    <span class="item-label">Иностранные языки, информатика</span>
+                    <span class="item-date">6 июня</span>
+                </div>
             </div>
-            <div class="section-item">
-                <span class="item-label">Русский язык</span>
-                <span class="item-date">9 июня</span>
+        </div>
+        <div class="animate-combo delay-8">
+            <div class="section">
+                <div class="section-item">
+                    <span class="item-label">Русский язык</span>
+                    <span class="item-date">9 июня</span>
+                </div>
             </div>
-            <div class="section-item">
-                <span class="item-label">Все предметы (кроме русского и математики)</span>
-                <span class="item-date">16 июня</span>
+        </div>
+        <div class="animate-combo delay-9">
+            <div class="section">
+                <div class="section-item">
+                    <span class="item-label">Все предметы (кроме русского и математики)</span>
+                    <span class="item-date">16 июня</span>
+                </div>
             </div>
-            <div class="section-item">
-                <span class="item-label">Все предметы (кроме русского и математики)</span>
-                <span class="item-date">19 июня</span>
+        </div>
+        <div class="animate-combo delay-10">
+            <div class="section">
+                <div class="section-item">
+                    <span class="item-label">Все предметы (кроме русского и математики)</span>
+                    <span class="item-date">19 июня</span>
+                </div>
             </div>
         </div>
 
         <!-- Резервные дни -->
-        <div class="section-header">Резервные дни</div>
-        <div class="section">
-            <div class="section-item">
-                <span class="item-label">Математика</span>
-                <span class="item-date">29 июня</span>
+        <div class="animate-combo delay-11">
+            <div class="section-header">Резервные дни</div>
+        </div>
+        <div class="animate-combo delay-12">
+            <div class="section">
+                <div class="section-item">
+                    <span class="item-label">Математика</span>
+                    <span class="item-date">29 июня</span>
+                </div>
             </div>
-            <div class="section-item">
-                <span class="item-label">Русский язык</span>
-                <span class="item-date">2 июля</span>
+        </div>
+        <div class="animate-combo delay-13">
+            <div class="section">
+                <div class="section-item">
+                    <span class="item-label">Русский язык</span>
+                    <span class="item-date">2 июля</span>
+                </div>
             </div>
-            <div class="section-item">
-                <span class="item-label">Все предметы (кроме русского и математики)</span>
-                <span class="item-date">3 июля</span>
+        </div>
+        <div class="animate-combo delay-14">
+            <div class="section">
+                <div class="section-item">
+                    <span class="item-label">Все предметы (кроме русского и математики)</span>
+                    <span class="item-date">3 июля</span>
+                </div>
             </div>
-            <div class="section-item">
-                <span class="item-label">Все предметы (кроме русского и математики)</span>
-                <span class="item-date">6 июля</span>
+        </div>
+        <div class="animate-combo delay-15">
+            <div class="section">
+                <div class="section-item">
+                    <span class="item-label">Все предметы (кроме русского и математики)</span>
+                    <span class="item-date">6 июля</span>
+                </div>
             </div>
         </div>
 
-        <!-- Устное собеседование -->
-        <div class="section-header">Итоговое собеседование</div>
-        <div class="section">
-            <div class="section-item">
-                <span class="item-label">Основная дата</span>
-                <span class="item-date">10 февраля 2027</span>
+        <!-- Итоговое собеседование -->
+        <div class="animate-combo delay-11">
+            <div class="section-header">Итоговое собеседование</div>
+        </div>
+        <div class="animate-combo delay-12">
+            <div class="section">
+                <div class="section-item">
+                    <span class="item-label">Основная дата</span>
+                    <span class="item-date">10 февраля 2027</span>
+                </div>
             </div>
-            <div class="section-item">
-                <span class="item-label">Резервная дата 1</span>
-                <span class="item-date">10 марта 2027</span>
+        </div>
+        <div class="animate-combo delay-13">
+            <div class="section">
+                <div class="section-item">
+                    <span class="item-label">Резервная дата 1</span>
+                    <span class="item-date">10 марта 2027</span>
+                </div>
             </div>
-            <div class="section-item">
-                <span class="item-label">Резервная дата 2</span>
-                <span class="item-date">19 апреля 2027</span>
+        </div>
+        <div class="animate-combo delay-14">
+            <div class="section">
+                <div class="section-item">
+                    <span class="item-label">Резервная дата 2</span>
+                    <span class="item-date">19 апреля 2027</span>
+                </div>
             </div>
         </div>
 
         <div style="height: 20px;"></div>
     </div>
 
-    <!-- PNG с прозрачностью -->
-    <div class="footer-image">
+    <!-- Картинка с простым fade in -->
+    <div class="footer-image animate-fade">
         <img src="/bdufm2/shawerma5.png">
     </div>
 
