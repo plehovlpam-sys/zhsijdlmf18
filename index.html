@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="Cache-Control" content="no-store" />
-    <title>.solutions proxy</title>
+    <title>Mara</title>
     <style>
         :root {
             color-scheme: light;
@@ -154,18 +154,6 @@
             pointer-events: none;
             background: linear-gradient(90deg, #8f959d, #4d535b, #15181d);
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), 0 -1px 1px rgba(0, 0, 0, 0.18);
-        }
-
-        .iphone4s-frame__mute {
-            position: absolute;
-            z-index: 4;
-            left: -1.89%;
-            top: 8.77%;
-            width: 1.35%;
-            height: 5.07%;
-            pointer-events: none;
-            background: linear-gradient(90deg, #d7dbe0 0%, #8d949d 28%, #4b535c 64%, #16191e 100%);
-            box-shadow: -1px 0 1px rgba(0, 0, 0, 0.18), inset 1px 0 0 rgba(255, 255, 255, 0.34);
         }
 
         .iphone4s-frame__volume {
@@ -426,7 +414,7 @@
             box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.16), 0 0 0 4px rgba(0, 0, 0, 0.92), 0 8px 14px rgba(0, 0, 0, 0.62);
         }
 
-        /* ===== СТАТУС БАР (точная копия из оригинала) ===== */
+        /* СТАТУС БАР */
         .status-bar {
             position: absolute;
             z-index: 10;
@@ -525,20 +513,6 @@
             height: 10px;
         }
 
-        .wifi {
-            position: absolute;
-            left: 94px;
-            top: 0;
-            width: 20px;
-            height: 20px;
-            background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='white' d='M10 4c3.15 0 5.95 1.22 7.92 3.13l-2.03 2.05C14.42 7.8 12.35 6.98 10 6.98S5.58 7.8 4.11 9.18L2.08 7.13C4.05 5.22 6.85 4 10 4Z'/%3E%3Cpath fill='white' d='M10 8c2.02 0 3.82.78 5.08 2.02l-2.1 2.1c-.76-.67-1.8-1.08-2.98-1.08s-2.22.41-2.98 1.08l-2.1-2.1C6.18 8.78 7.98 8 10 8Z'/%3E%3Cpath fill='white' d='M10 12c1.25 0 2.32.73 2.8 1.79L10 15.7l-2.8-1.91C7.68 12.73 8.75 12 10 12Z'/%3E%3C/svg%3E");
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: 20px 20px;
-            opacity: 0.95;
-            filter: drop-shadow(0 -0.5px 0.25px rgba(0, 0, 0, 0.45));
-        }
-
         .battery-percent {
             position: absolute;
             left: 0;
@@ -578,7 +552,7 @@
             fill: rgba(255, 255, 255, 0.95);
         }
 
-        /* ===== СОДЕРЖИМОЕ ЭКРАНА (ТВОЙ САЙТ) ===== */
+        /* ===== КОНТЕНТ ===== */
         .iphone {
             position: relative;
             width: 100%;
@@ -628,10 +602,11 @@
             display: none;
         }
 
-        /* SVG блок */
+        /* SVG блок - растягивается на всю высоту экрана */
         .svg-wrap {
             width: 100%;
-            height: 320px;
+            height: 100%;
+            min-height: 200px;
             position: relative;
             flex-shrink: 0;
             transition: height 0.05s linear;
@@ -640,7 +615,8 @@
             justify-content: center;
             overflow: hidden;
             background: transparent;
-            margin-top: 4px;
+            margin-top: 0;
+            flex: 1;
         }
 
         .svg-wrap object,
@@ -654,15 +630,16 @@
 
         .scroll-down {
             position: absolute;
-            bottom: 4px;
+            bottom: 12px;
             left: 50%;
             transform: translateX(-50%);
             color: #888;
-            font-size: 24px;
+            font-size: 28px;
             pointer-events: none;
             font-family: 'Times New Roman', Times, serif;
             line-height: 1;
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
+            z-index: 5;
         }
 
         /* Картинки */
@@ -738,7 +715,7 @@
             padding: 0;
         }
 
-        /* Затемнение снизу для читаемости */
+        /* Затемнение снизу */
         .screen-gradient {
             position: absolute;
             bottom: 0;
@@ -750,22 +727,20 @@
             pointer-events: none;
         }
 
-        /* Скрываем домашнюю кнопку в контенте */
         .iphone4s-frame__home {
             z-index: 20;
         }
     </style>
 </head>
 <body>
-    <main class="site-shell" aria-label=".solutions proxy notice">
-        <section class="iphone4s-frame" aria-label="iPhone 4S frame">
+    <main class="site-shell">
+        <section class="iphone4s-frame">
             <div class="iphone4s-frame__rim" aria-hidden="true"></div>
             <div class="iphone4s-frame__glass-edge" aria-hidden="true"></div>
             <div class="iphone4s-frame__antenna iphone4s-frame__antenna--top-left" aria-hidden="true"></div>
             <div class="iphone4s-frame__antenna iphone4s-frame__antenna--left-bottom" aria-hidden="true"></div>
             <div class="iphone4s-frame__antenna iphone4s-frame__antenna--right-bottom" aria-hidden="true"></div>
             <div class="iphone4s-frame__power" aria-hidden="true"></div>
-            <div class="iphone4s-frame__mute" aria-hidden="true"></div>
             <div class="iphone4s-frame__volume iphone4s-frame__volume--up" aria-hidden="true"></div>
             <div class="iphone4s-frame__volume iphone4s-frame__volume--down" aria-hidden="true"></div>
 
@@ -796,20 +771,19 @@
                 <div class="iphone4s-frame__screen">
                     <div class="iphone4s-frame__screen-inner">
                         <div class="iphone">
-                            <!-- Статус бар (точная копия) -->
-                            <header class="status-bar" aria-label="Status bar">
+                            <!-- Статус бар -->
+                            <header class="status-bar">
                                 <div class="status-left">
-                                    <span class="cell-bars" aria-hidden="true">
+                                    <span class="cell-bars">
                                         <i></i><i></i><i></i><i></i><i></i>
                                     </span>
-                                    <span class="carrier">.solutions</span>
-                                    <span class="wifi" aria-hidden="true"></span>
+                                    <span class="carrier">Mara</span>
                                 </div>
-                                <time class="clock" id="clock">2:31 PM</time>
-                                <div class="status-right" aria-hidden="true">
+                                <time class="clock" id="clock">00:00</time>
+                                <div class="status-right">
                                     <span class="battery-percent">100%</span>
                                     <span class="battery">
-                                        <svg viewBox="0 0 21 20" aria-hidden="true" focusable="false">
+                                        <svg viewBox="0 0 21 20">
                                             <path class="battery-shell" d="M0.5 4.5H18.5V14.5H0.5Z" />
                                             <path class="battery-nub" d="M19 8H21V11H19Z" />
                                             <path class="battery-fill" d="M2 6.5H17V12.5H2Z" />
@@ -818,38 +792,35 @@
                                 </div>
                             </header>
 
-                            <div class="wallpaper" aria-hidden="true"></div>
-                            <div class="bottom-shadow" aria-hidden="true"></div>
+                            <div class="wallpaper"></div>
+                            <div class="bottom-shadow"></div>
 
-                            <!-- ===== ТВОЙ КОНТЕНТ (СКРОЛЛ) ===== -->
+                            <!-- КОНТЕНТ -->
                             <div class="content-scroll" id="contentScroll">
-                                <!-- SVG -->
+                                <!-- SVG - растягивается на всю высоту -->
                                 <div class="svg-wrap" id="svgWrap">
                                     <object data="mara.svg" type="image/svg+xml"></object>
                                     <div class="scroll-down">▼</div>
                                 </div>
 
-                                <!-- Три картинки -->
                                 <div class="images-section">
                                     <img src="1.png" alt="">
                                     <img src="2.png" alt="">
                                     <img src="3.png" alt="">
                                 </div>
 
-                                <!-- Кнопки -->
                                 <div class="buttons-section">
                                     <button>кнопка1</button>
                                     <button>кнопка2</button>
                                     <button>кнопка3</button>
                                 </div>
 
-                                <!-- gh.png -->
                                 <div class="gh-image">
                                     <img src="gh.png" alt="">
                                 </div>
                             </div>
 
-                            <div class="screen-gradient" aria-hidden="true"></div>
+                            <div class="screen-gradient"></div>
                         </div>
                     </div>
                 </div>
@@ -859,16 +830,14 @@
 
     <script>
         (function() {
-            // === ЧАСЫ (как в оригинале) ===
+            // === ЧАСЫ 24-часовой формат ===
             function updateClock() {
                 const clock = document.getElementById('clock');
                 if (!clock) return;
                 const now = new Date();
-                let hours = now.getHours();
+                const hours = String(now.getHours()).padStart(2, '0');
                 const minutes = String(now.getMinutes()).padStart(2, '0');
-                const ampm = hours >= 12 ? 'PM' : 'AM';
-                hours = hours % 12 || 12;
-                clock.textContent = hours + ':' + minutes + ' ' + ampm;
+                clock.textContent = hours + ':' + minutes;
             }
             updateClock();
             setInterval(updateClock, 1000);
@@ -878,12 +847,13 @@
             const scrollContainer = document.getElementById('contentScroll');
             if (!wrap || !scrollContainer) return;
 
-            let maxHeight = 320;
-            const minHeight = 50;
+            let maxHeight = 0;
+            const minHeight = 60;
 
             function setMaxHeight() {
-                const containerHeight = scrollContainer.clientHeight || 400;
-                maxHeight = Math.min(containerHeight * 0.55, 400);
+                // Высчитываем высоту контейнера минус статус бар и отступы
+                const screenHeight = scrollContainer.clientHeight || 400;
+                maxHeight = screenHeight - 10; // оставляем место для иконки вниз
                 maxHeight = Math.max(maxHeight, 200);
                 wrap.style.height = maxHeight + 'px';
                 const obj = wrap.querySelector('object');
