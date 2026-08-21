@@ -7,9 +7,6 @@
     <title>Mara</title>
     <style>
         :root {
-            color-scheme: light;
-            --phone-width: 320px;
-            --phone-height: 568px;
             --iphone4s-width: 376px;
             --iphone4s-height: 739px;
             --iphone4s-scale: 1;
@@ -33,9 +30,7 @@
             margin: 0;
             min-height: 100vh;
             min-height: 100dvh;
-            background:
-                radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.16), transparent 28rem),
-                linear-gradient(180deg, #15181b 0%, #0c0e10 100%);
+            background: #000;
             font-family: var(--ios-font);
             overflow: hidden;
         }
@@ -47,6 +42,7 @@
             height: 100vh;
             height: 100dvh;
             overflow: hidden;
+            background: #000;
         }
 
         .iphone4s-frame {
@@ -333,6 +329,7 @@
             transform: translateX(-50%);
             transition: transform 100ms ease, box-shadow 100ms ease;
             box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.06), inset 0 -5px 9px rgba(0, 0, 0, 0.95), 0 3px 6px rgba(0, 0, 0, 0.72);
+            z-index: 20;
         }
 
         .iphone4s-frame__home:active {
@@ -401,6 +398,7 @@
             left: 7.45%;
             right: 7.45%;
             top: 17.7%;
+            bottom: 8.5%;
             aspect-ratio: 2 / 3;
         }
 
@@ -414,7 +412,7 @@
             box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.16), 0 0 0 4px rgba(0, 0, 0, 0.92), 0 8px 14px rgba(0, 0, 0, 0.62);
         }
 
-        /* СТАТУС БАР */
+        /* СТАТУС БАР - убран Wi-Fi */
         .status-bar {
             position: absolute;
             z-index: 10;
@@ -436,7 +434,7 @@
             left: 4px;
             top: 0;
             height: 20px;
-            width: 114px;
+            width: 100px;
         }
 
         .status-right {
@@ -450,28 +448,29 @@
         .carrier {
             display: block;
             position: absolute;
-            left: 24px;
+            left: 20px;
             top: 0;
-            width: 68px;
             height: 20px;
             line-height: 20px;
             overflow: visible;
             white-space: nowrap;
+            font-size: 13px;
         }
 
         .clock {
             display: block;
             position: absolute;
-            left: 123px;
+            left: 50%;
             top: 0;
-            width: 78px;
+            transform: translateX(-50%);
             height: 20px;
             text-align: center;
             font: inherit;
             line-height: 20px;
             color: inherit;
             white-space: nowrap;
-            overflow: visible;
+            font-size: 13px;
+            font-weight: 700;
         }
 
         .cell-bars {
@@ -575,8 +574,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            height: 220px;
-            background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8));
+            height: 100%;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0) 70%, rgba(20, 0, 30, 0.3) 100%);
             z-index: 1;
             pointer-events: none;
         }
@@ -602,21 +601,20 @@
             display: none;
         }
 
-        /* SVG блок - растягивается на всю высоту экрана */
+        /* SVG блок - занимает ВСЁ пространство экрана */
         .svg-wrap {
             width: 100%;
-            height: 100%;
-            min-height: 200px;
+            height: 100vh;
+            min-height: 300px;
             position: relative;
             flex-shrink: 0;
             transition: height 0.05s linear;
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             justify-content: center;
             overflow: hidden;
             background: transparent;
             margin-top: 0;
-            flex: 1;
         }
 
         .svg-wrap object,
@@ -630,16 +628,17 @@
 
         .scroll-down {
             position: absolute;
-            bottom: 12px;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            color: #888;
-            font-size: 28px;
+            color: #666;
+            font-size: 30px;
             pointer-events: none;
             font-family: 'Times New Roman', Times, serif;
             line-height: 1;
-            text-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
+            text-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
             z-index: 5;
+            opacity: 0.7;
         }
 
         /* Картинки */
@@ -648,10 +647,12 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 6px 0;
-            gap: 12px;
+            padding: 8px 0;
+            gap: 14px;
             background: transparent;
             flex-shrink: 0;
+            position: relative;
+            z-index: 3;
         }
 
         .images-section img {
@@ -661,38 +662,43 @@
             display: block;
             border: none;
             background: transparent;
-            border-radius: 2px;
+            border-radius: 3px;
         }
 
-        /* Кнопки */
+        /* Кнопки - новый градиент */
         .buttons-section {
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
-            padding: 12px 0 8px;
+            gap: 10px;
+            padding: 14px 0 10px;
             background: transparent;
             flex-shrink: 0;
+            position: relative;
+            z-index: 3;
         }
 
         .buttons-section button {
             font-family: 'Times New Roman', Times, serif;
-            font-size: 14px;
-            background: white;
-            color: black;
-            border: 1px solid #aaa;
-            padding: 4px 24px;
+            font-size: 15px;
+            background: linear-gradient(180deg, #ffffff 0%, #e0e0e0 100%);
+            color: #000;
+            border: 1px solid #888;
+            padding: 5px 28px;
             width: fit-content;
-            min-width: 100px;
+            min-width: 110px;
             cursor: pointer;
             text-transform: lowercase;
             letter-spacing: 0.3px;
+            border-radius: 2px;
             transition: 0.1s linear;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
         }
 
         .buttons-section button:active {
             transform: translate(1px, 1px);
+            background: linear-gradient(180deg, #d0d0d0 0%, #b0b0b0 100%);
         }
 
         /* gh.png */
@@ -704,6 +710,8 @@
             padding: 0;
             line-height: 0;
             flex-shrink: 0;
+            position: relative;
+            z-index: 3;
         }
 
         .gh-image img {
@@ -715,20 +723,15 @@
             padding: 0;
         }
 
-        /* Затемнение снизу */
         .screen-gradient {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            height: 60px;
-            background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.7));
+            height: 80px;
+            background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.6));
             z-index: 3;
             pointer-events: none;
-        }
-
-        .iphone4s-frame__home {
-            z-index: 20;
         }
     </style>
 </head>
@@ -797,7 +800,7 @@
 
                             <!-- КОНТЕНТ -->
                             <div class="content-scroll" id="contentScroll">
-                                <!-- SVG - растягивается на всю высоту -->
+                                <!-- SVG - на всю высоту -->
                                 <div class="svg-wrap" id="svgWrap">
                                     <object data="mara.svg" type="image/svg+xml"></object>
                                     <div class="scroll-down">▼</div>
@@ -830,7 +833,7 @@
 
     <script>
         (function() {
-            // === ЧАСЫ 24-часовой формат ===
+            // ЧАСЫ 24-часовой формат
             function updateClock() {
                 const clock = document.getElementById('clock');
                 if (!clock) return;
@@ -842,19 +845,17 @@
             updateClock();
             setInterval(updateClock, 1000);
 
-            // === СЖАТИЕ SVG ПРИ СКРОЛЛЕ ===
+            // СЖАТИЕ SVG ПРИ СКРОЛЛЕ
             const wrap = document.getElementById('svgWrap');
             const scrollContainer = document.getElementById('contentScroll');
             if (!wrap || !scrollContainer) return;
 
             let maxHeight = 0;
-            const minHeight = 60;
+            const minHeight = 80;
 
             function setMaxHeight() {
-                // Высчитываем высоту контейнера минус статус бар и отступы
-                const screenHeight = scrollContainer.clientHeight || 400;
-                maxHeight = screenHeight - 10; // оставляем место для иконки вниз
-                maxHeight = Math.max(maxHeight, 200);
+                const containerHeight = scrollContainer.clientHeight || 500;
+                maxHeight = containerHeight;
                 wrap.style.height = maxHeight + 'px';
                 const obj = wrap.querySelector('object');
                 if (obj) obj.style.height = maxHeight + 'px';
@@ -863,7 +864,7 @@
 
             function updateHeight() {
                 const scrollY = scrollContainer.scrollTop;
-                let newH = maxHeight - scrollY * 0.9;
+                let newH = maxHeight - scrollY * 0.85;
                 if (newH < minHeight) newH = minHeight;
                 if (newH > maxHeight) newH = maxHeight;
                 wrap.style.height = newH + 'px';
@@ -890,7 +891,7 @@
                 setTimeout(setMaxHeight, 300);
             });
 
-            setTimeout(setMaxHeight, 150);
+            setTimeout(setMaxHeight, 200);
         })();
     </script>
 </body>
