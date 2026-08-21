@@ -32,6 +32,7 @@
             overflow: hidden;
             position: relative;
             transition: height 0.05s linear;
+            padding: 0 16px;
         }
         .svg-wrap svg {
             width: 100%;
@@ -75,29 +76,41 @@
             flex-direction: column;
             align-items: center;
             gap: 12px;
-            padding: 30px 16px 50px;
+            padding: 30px 16px 20px;
             background: black;
         }
         .buttons-section button {
             font-family: 'Times New Roman', Times, serif;
-            font-size: 22px;
+            font-size: 16px;
             background: white;
             color: black;
             border: 1px solid #aaa;
-            padding: 8px 36px;
+            padding: 6px 28px;
             width: fit-content;
-            min-width: 160px;
+            min-width: 120px;
             letter-spacing: 0.5px;
             cursor: pointer;
-            box-shadow: 3px 3px 0 #444;
-            transition: 0.1s linear;
             text-transform: lowercase;
         }
         .buttons-section button:active {
             transform: translate(2px, 2px);
-            box-shadow: 1px 1px 0 #444;
         }
-        /* для мобильного приятного скролла */
+        .gh-image {
+            width: 100%;
+            display: block;
+            background: black;
+            margin: 0;
+            padding: 0;
+            line-height: 0;
+        }
+        .gh-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border: none;
+            margin: 0;
+            padding: 0;
+        }
         html {
             scroll-behavior: smooth;
         }
@@ -105,56 +118,51 @@
 </head>
 <body>
 <div class="container">
-    <!-- Блок с SVG на весь экран -->
     <div class="svg-wrap" id="svgWrap">
-        <!-- mara.svg лежит в корне сервера, подгружается напрямую -->
         <object data="mara.svg" type="image/svg+xml" style="width:100%; height:100%; display:block; background:black;"></object>
         <div class="scroll-down">▼</div>
     </div>
 
-    <!-- Три картинки 1.png, 2.png, 3.png -->
     <div class="images-section">
         <img src="1.png" alt="">
         <img src="2.png" alt="">
         <img src="3.png" alt="">
     </div>
 
-    <!-- Кнопки -->
     <div class="buttons-section">
         <button>кнопка1</button>
         <button>кнопка2</button>
         <button>кнопка3</button>
+    </div>
+
+    <div class="gh-image">
+        <img src="gh.png" alt="">
     </div>
 </div>
 
 <script>
     (function() {
         const wrap = document.getElementById('svgWrap');
-        let startHeight = window.innerHeight; // начальная высота 100vh
+        let startHeight = window.innerHeight;
         let prevScroll = window.scrollY;
         let ticking = false;
 
-        // установим высоту блока равной высоте окна при загрузке
         function setFullHeight() {
             wrap.style.height = window.innerHeight + 'px';
             startHeight = window.innerHeight;
         }
         setFullHeight();
 
-        // функция обновления высоты при скролле
         function updateHeight() {
             const scrollY = window.scrollY;
-            // максимальная высота — вся высота окна, минимальная — 20% от высоты окна (но не меньше 100px)
             const maxH = window.innerHeight;
             const minH = Math.max(100, window.innerHeight * 0.2);
-            // высота уменьшается пропорционально прокрутке, но не меньше minH
             let newH = maxH - scrollY;
             if (newH < minH) newH = minH;
             if (newH > maxH) newH = maxH;
             wrap.style.height = newH + 'px';
         }
 
-        // обработчик скролла с requestAnimationFrame для плавности
         window.addEventListener('scroll', function() {
             if (!ticking) {
                 window.requestAnimationFrame(function() {
@@ -165,20 +173,16 @@
             }
         });
 
-        // также обновляем при ресайзе (чтобы высота окна корректно учитывалась)
         window.addEventListener('resize', function() {
             setFullHeight();
-            // сразу скорректируем по текущему скроллу
             updateHeight();
         });
 
-        // небольшая коррекция при загрузке и после
         window.addEventListener('load', function() {
             setFullHeight();
             updateHeight();
         });
 
-        // дополнительно для мобильных — после смены ориентации
         window.addEventListener('orientationchange', function() {
             setTimeout(function() {
                 setFullHeight();
@@ -186,7 +190,6 @@
             }, 200);
         });
 
-        // начальное обновление после рендера
         setTimeout(function() {
             setFullHeight();
             updateHeight();
