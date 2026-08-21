@@ -7,9 +7,9 @@
     <title>Mara</title>
     <style>
         :root {
-            --iphone4s-width: 376px;
-            --iphone4s-height: 739px;
-            --iphone4s-scale: 1;
+            --frame-width: 376px;
+            --frame-height: 739px;
+            --frame-scale: 1;
             --ios-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
         }
 
@@ -45,52 +45,52 @@
             background: #000;
         }
 
-        .iphone4s-frame {
+        .phone-frame {
             position: absolute;
             left: 50%;
             top: 50%;
-            width: var(--iphone4s-width);
-            height: var(--iphone4s-height);
+            width: var(--frame-width);
+            height: var(--frame-height);
             overflow: visible;
-            transform: translate(-50%, -50%) scale(var(--iphone4s-scale));
+            transform: translate(-50%, -50%) scale(var(--frame-scale));
             transform-origin: center center;
         }
 
         @media (max-width: 392px),
         (max-height: 772px) {
             :root {
-                --iphone4s-scale: 0.9;
+                --frame-scale: 0.9;
             }
         }
 
         @media (max-width: 360px),
         (max-height: 690px) {
             :root {
-                --iphone4s-scale: 0.84;
+                --frame-scale: 0.84;
             }
         }
 
         @media (max-width: 330px),
         (max-height: 610px) {
             :root {
-                --iphone4s-scale: 0.74;
+                --frame-scale: 0.74;
             }
         }
 
         @media (max-width: 290px),
         (max-height: 540px) {
             :root {
-                --iphone4s-scale: 0.65;
+                --frame-scale: 0.65;
             }
         }
 
-        .iphone4s-frame *,
-        .iphone4s-frame *::before,
-        .iphone4s-frame *::after {
+        .phone-frame *,
+        .phone-frame *::before,
+        .phone-frame *::after {
             box-sizing: border-box;
         }
 
-        .iphone4s-frame__rim {
+        .phone-frame__rim {
             position: absolute;
             inset: -0.8%;
             pointer-events: none;
@@ -101,7 +101,7 @@
             box-shadow: 0 28px 62px rgba(0, 0, 0, 0.28);
         }
 
-        .iphone4s-frame__glass-edge {
+        .phone-frame__glass-edge {
             position: absolute;
             inset: -0.27%;
             pointer-events: none;
@@ -111,7 +111,7 @@
                 linear-gradient(145deg, rgba(255, 255, 255, 0.36), rgba(255, 255, 255, 0.055) 15%, rgba(0, 0, 0, 0.54) 50%, rgba(0, 0, 0, 0.12) 100%);
         }
 
-        .iphone4s-frame__antenna {
+        .phone-frame__antenna {
             position: absolute;
             z-index: 5;
             pointer-events: none;
@@ -119,28 +119,28 @@
             background: #111318;
         }
 
-        .iphone4s-frame__antenna--top-left {
+        .phone-frame__antenna--tl {
             left: 21.02%;
             top: -0.41%;
             width: 0.54%;
             height: 0.82%;
         }
 
-        .iphone4s-frame__antenna--left-bottom {
+        .phone-frame__antenna--bl {
             left: -0.81%;
             bottom: 12.6%;
             width: 1.35%;
             height: 0.27%;
         }
 
-        .iphone4s-frame__antenna--right-bottom {
+        .phone-frame__antenna--br {
             right: -0.81%;
             bottom: 12.6%;
             width: 1.35%;
             height: 0.27%;
         }
 
-        .iphone4s-frame__power {
+        .phone-frame__power {
             position: absolute;
             z-index: 4;
             top: -0.82%;
@@ -152,7 +152,7 @@
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), 0 -1px 1px rgba(0, 0, 0, 0.18);
         }
 
-        .iphone4s-frame__volume {
+        .phone-frame__volume {
             position: absolute;
             z-index: 4;
             left: -1.62%;
@@ -163,15 +163,15 @@
             box-shadow: -1px 0 1px rgba(0, 0, 0, 0.18), inset 1px 0 0 rgba(255, 255, 255, 0.38), inset -1px 0 1px rgba(0, 0, 0, 0.56);
         }
 
-        .iphone4s-frame__volume--up {
+        .phone-frame__volume--up {
             top: 19.73%;
         }
 
-        .iphone4s-frame__volume--down {
+        .phone-frame__volume--down {
             top: 28.36%;
         }
 
-        .iphone4s-frame__body {
+        .phone-frame__body {
             position: relative;
             width: 100%;
             height: 100%;
@@ -189,7 +189,7 @@
                 0 20px 48px rgba(0, 0, 0, 0.38);
         }
 
-        .iphone4s-frame__inner-edge {
+        .phone-frame__inner-edge {
             position: absolute;
             inset: 2.43%;
             pointer-events: none;
@@ -198,7 +198,7 @@
             box-shadow: inset 0 0 28px rgba(255, 255, 255, 0.04), inset 0 -26px 32px rgba(0, 0, 0, 0.52);
         }
 
-        .iphone4s-frame__front-gloss {
+        .phone-frame__gloss {
             position: absolute;
             left: 18%;
             top: 8.49%;
@@ -211,7 +211,7 @@
             transform: rotate(-18deg);
         }
 
-        .iphone4s-frame__camera {
+        .phone-frame__camera {
             position: absolute;
             left: 34.2%;
             top: 7.8%;
@@ -219,11 +219,11 @@
             aspect-ratio: 1;
             pointer-events: none;
             border-radius: 999px;
-            background: #020204;
-            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 1), inset 0 -1px 1px rgba(255, 255, 255, 0.035);
+            background: transparent;
+            box-shadow: none;
         }
 
-        .iphone4s-frame__camera-lens {
+        .phone-frame__camera-lens {
             position: absolute;
             inset: 18.75%;
             border-radius: inherit;
@@ -231,7 +231,7 @@
             box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.08), inset 0 -2px 3px rgba(0, 0, 0, 0.94);
         }
 
-        .iphone4s-frame__camera-dot {
+        .phone-frame__camera-dot {
             position: absolute;
             left: 37.5%;
             top: 31.25%;
@@ -242,7 +242,7 @@
             filter: blur(0.35px);
         }
 
-        .iphone4s-frame__camera-shadow {
+        .phone-frame__camera-shadow {
             position: absolute;
             left: 18.75%;
             top: 12.5%;
@@ -253,7 +253,7 @@
             filter: blur(0.8px);
         }
 
-        .iphone4s-frame__speaker {
+        .phone-frame__speaker {
             position: absolute;
             left: 50%;
             top: 7.8%;
@@ -261,16 +261,12 @@
             height: 2.19%;
             pointer-events: none;
             border-radius: 999px;
-            background: #020203;
+            background: transparent;
             transform: translateX(-50%);
-            box-shadow:
-                inset 0 4px 5px rgba(0, 0, 0, 0.98),
-                inset 0 -1px 1px rgba(255, 255, 255, 0.05),
-                0 0 0 1px rgba(255, 255, 255, 0.03),
-                1px 1px 1px rgba(0, 0, 0, 0.72);
+            box-shadow: none;
         }
 
-        .iphone4s-frame__speaker-glow {
+        .phone-frame__speaker-glow {
             position: absolute;
             left: 7.7%;
             bottom: 18.75%;
@@ -282,7 +278,7 @@
             opacity: 0.7;
         }
 
-        .iphone4s-frame__speaker-metal {
+        .phone-frame__speaker-metal {
             position: absolute;
             left: 11.5%;
             right: 12.8%;
@@ -293,7 +289,7 @@
             box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.38), inset 0 -1px 1px rgba(0, 0, 0, 0.92);
         }
 
-        .iphone4s-frame__speaker-highlight {
+        .phone-frame__speaker-highlight {
             position: absolute;
             left: 20.5%;
             right: 30.8%;
@@ -303,7 +299,7 @@
             background: rgba(255, 255, 255, 0.26);
         }
 
-        .iphone4s-frame__speaker-shadow {
+        .phone-frame__speaker-shadow {
             position: absolute;
             left: 15.4%;
             right: 10.3%;
@@ -314,7 +310,7 @@
             filter: blur(0.3px);
         }
 
-        .iphone4s-frame__home {
+        .phone-frame__home {
             position: absolute;
             left: 50%;
             bottom: 3.7%;
@@ -332,12 +328,12 @@
             z-index: 20;
         }
 
-        .iphone4s-frame__home:active {
+        .phone-frame__home:active {
             transform: translateX(-50%) translateY(1px);
             box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.035), inset 0 -8px 12px rgba(0, 0, 0, 1), 0 2px 4px rgba(0, 0, 0, 0.68);
         }
 
-        .iphone4s-frame__home-glow {
+        .phone-frame__home-glow {
             position: absolute;
             left: 0;
             top: 0;
@@ -349,11 +345,11 @@
             transition: opacity 100ms ease;
         }
 
-        .iphone4s-frame__home:active .iphone4s-frame__home-glow {
+        .phone-frame__home:active .phone-frame__home-glow {
             opacity: 0.55;
         }
 
-        .iphone4s-frame__home-inner-glow {
+        .phone-frame__home-inner-glow {
             position: absolute;
             left: 32.35%;
             top: 11.76%;
@@ -366,11 +362,11 @@
             transition: opacity 100ms ease;
         }
 
-        .iphone4s-frame__home:active .iphone4s-frame__home-inner-glow {
+        .phone-frame__home:active .phone-frame__home-inner-glow {
             opacity: 0.45;
         }
 
-        .iphone4s-frame__home-divider {
+        .phone-frame__home-divider {
             position: absolute;
             left: 48.53%;
             top: 0;
@@ -380,7 +376,7 @@
             background: rgba(0, 0, 0, 0.45);
         }
 
-        .iphone4s-frame__home-square {
+        .phone-frame__home-square {
             position: absolute;
             left: 50%;
             top: 50%;
@@ -393,7 +389,7 @@
             box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px 2px rgba(0, 0, 0, 0.65);
         }
 
-        .iphone4s-frame__screen {
+        .phone-frame__screen {
             position: absolute;
             left: 7.45%;
             right: 7.45%;
@@ -402,7 +398,7 @@
             aspect-ratio: 2 / 3;
         }
 
-        .iphone4s-frame__screen-inner {
+        .phone-frame__screen-inner {
             position: relative;
             width: 100%;
             height: 100%;
@@ -412,7 +408,7 @@
             box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.16), 0 0 0 4px rgba(0, 0, 0, 0.92), 0 8px 14px rgba(0, 0, 0, 0.62);
         }
 
-        /* СТАТУС БАР - убран Wi-Fi */
+        /* СТАТУС БАР */
         .status-bar {
             position: absolute;
             z-index: 10;
@@ -552,7 +548,7 @@
         }
 
         /* ===== КОНТЕНТ ===== */
-        .iphone {
+        .phone {
             position: relative;
             width: 100%;
             height: 100%;
@@ -601,7 +597,7 @@
             display: none;
         }
 
-        /* SVG блок - занимает ВСЁ пространство экрана */
+        /* SVG блок */
         .svg-wrap {
             width: 100%;
             height: 100vh;
@@ -665,7 +661,7 @@
             border-radius: 3px;
         }
 
-        /* Кнопки - новый градиент */
+        /* Кнопки */
         .buttons-section {
             width: 100%;
             display: flex;
@@ -737,43 +733,43 @@
 </head>
 <body>
     <main class="site-shell">
-        <section class="iphone4s-frame">
-            <div class="iphone4s-frame__rim" aria-hidden="true"></div>
-            <div class="iphone4s-frame__glass-edge" aria-hidden="true"></div>
-            <div class="iphone4s-frame__antenna iphone4s-frame__antenna--top-left" aria-hidden="true"></div>
-            <div class="iphone4s-frame__antenna iphone4s-frame__antenna--left-bottom" aria-hidden="true"></div>
-            <div class="iphone4s-frame__antenna iphone4s-frame__antenna--right-bottom" aria-hidden="true"></div>
-            <div class="iphone4s-frame__power" aria-hidden="true"></div>
-            <div class="iphone4s-frame__volume iphone4s-frame__volume--up" aria-hidden="true"></div>
-            <div class="iphone4s-frame__volume iphone4s-frame__volume--down" aria-hidden="true"></div>
+        <section class="phone-frame">
+            <div class="phone-frame__rim" aria-hidden="true"></div>
+            <div class="phone-frame__glass-edge" aria-hidden="true"></div>
+            <div class="phone-frame__antenna phone-frame__antenna--tl" aria-hidden="true"></div>
+            <div class="phone-frame__antenna phone-frame__antenna--bl" aria-hidden="true"></div>
+            <div class="phone-frame__antenna phone-frame__antenna--br" aria-hidden="true"></div>
+            <div class="phone-frame__power" aria-hidden="true"></div>
+            <div class="phone-frame__volume phone-frame__volume--up" aria-hidden="true"></div>
+            <div class="phone-frame__volume phone-frame__volume--down" aria-hidden="true"></div>
 
-            <div class="iphone4s-frame__body">
-                <div class="iphone4s-frame__inner-edge" aria-hidden="true"></div>
-                <div class="iphone4s-frame__front-gloss" aria-hidden="true"></div>
+            <div class="phone-frame__body">
+                <div class="phone-frame__inner-edge" aria-hidden="true"></div>
+                <div class="phone-frame__gloss" aria-hidden="true"></div>
 
-                <div class="iphone4s-frame__camera" aria-hidden="true">
-                    <span class="iphone4s-frame__camera-lens"></span>
-                    <span class="iphone4s-frame__camera-dot"></span>
-                    <span class="iphone4s-frame__camera-shadow"></span>
+                <div class="phone-frame__camera" aria-hidden="true">
+                    <span class="phone-frame__camera-lens"></span>
+                    <span class="phone-frame__camera-dot"></span>
+                    <span class="phone-frame__camera-shadow"></span>
                 </div>
 
-                <div class="iphone4s-frame__speaker" aria-hidden="true">
-                    <span class="iphone4s-frame__speaker-glow"></span>
-                    <span class="iphone4s-frame__speaker-metal"></span>
-                    <span class="iphone4s-frame__speaker-highlight"></span>
-                    <span class="iphone4s-frame__speaker-shadow"></span>
+                <div class="phone-frame__speaker" aria-hidden="true">
+                    <span class="phone-frame__speaker-glow"></span>
+                    <span class="phone-frame__speaker-metal"></span>
+                    <span class="phone-frame__speaker-highlight"></span>
+                    <span class="phone-frame__speaker-shadow"></span>
                 </div>
 
-                <button class="iphone4s-frame__home" type="button" aria-label="Home">
-                    <span class="iphone4s-frame__home-glow"></span>
-                    <span class="iphone4s-frame__home-inner-glow"></span>
-                    <span class="iphone4s-frame__home-divider"></span>
-                    <span class="iphone4s-frame__home-square"></span>
+                <button class="phone-frame__home" type="button" aria-label="Home">
+                    <span class="phone-frame__home-glow"></span>
+                    <span class="phone-frame__home-inner-glow"></span>
+                    <span class="phone-frame__home-divider"></span>
+                    <span class="phone-frame__home-square"></span>
                 </button>
 
-                <div class="iphone4s-frame__screen">
-                    <div class="iphone4s-frame__screen-inner">
-                        <div class="iphone">
+                <div class="phone-frame__screen">
+                    <div class="phone-frame__screen-inner">
+                        <div class="phone">
                             <!-- Статус бар -->
                             <header class="status-bar">
                                 <div class="status-left">
@@ -800,7 +796,7 @@
 
                             <!-- КОНТЕНТ -->
                             <div class="content-scroll" id="contentScroll">
-                                <!-- SVG - на всю высоту -->
+                                <!-- SVG -->
                                 <div class="svg-wrap" id="svgWrap">
                                     <object data="mara.svg" type="image/svg+xml"></object>
                                     <div class="scroll-down">▼</div>
@@ -833,7 +829,7 @@
 
     <script>
         (function() {
-            // ЧАСЫ 24-часовой формат
+            // Часы 24-часовой формат
             function updateClock() {
                 const clock = document.getElementById('clock');
                 if (!clock) return;
@@ -845,7 +841,7 @@
             updateClock();
             setInterval(updateClock, 1000);
 
-            // СЖАТИЕ SVG ПРИ СКРОЛЛЕ
+            // Сжатие SVG при скролле
             const wrap = document.getElementById('svgWrap');
             const scrollContainer = document.getElementById('contentScroll');
             if (!wrap || !scrollContainer) return;
