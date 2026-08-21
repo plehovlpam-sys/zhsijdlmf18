@@ -100,22 +100,39 @@
                 linear-gradient(90deg, #f5f5f5 0%, #ffffff 5%, #e8e8e8 10%, #d0d0d0 17%, #c8c8c8 50%, #d0d0d0 83%, #e8e8e8 90%, #ffffff 95%, #f5f5f5 100%);
             box-shadow: 0 28px 62px rgba(0, 0, 0, 0.28);
             overflow: hidden;
+            position: relative;
         }
 
-        .phone-frame__rim-texture {
+        /* tty1.png - левый верхний угол, полностью видимое, скругляется рамкой */
+        .phone-frame__texture-left {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 18%;
+            top: -0.8%;
+            left: -0.8%;
+            width: 35%;
+            height: 35%;
             pointer-events: none;
-            object-fit: cover;
-            object-position: top center;
+            object-fit: contain;
+            object-position: top left;
             z-index: 10;
             mix-blend-mode: multiply;
-            opacity: 0.6;
+            opacity: 0.7;
             border-radius: inherit;
-            clip-path: inset(0 0 82% 0);
+        }
+
+        /* stick.png - правая часть, сразу после динамика */
+        .phone-frame__sticker {
+            position: absolute;
+            top: 6%;
+            right: 2%;
+            width: 22%;
+            height: auto;
+            aspect-ratio: 1 / 1;
+            pointer-events: none;
+            object-fit: contain;
+            z-index: 11;
+            opacity: 0.85;
+            transform: rotate(8deg);
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
         }
 
         .phone-frame__glass-edge {
@@ -743,7 +760,8 @@
     <main class="site-shell">
         <section class="phone-frame">
             <div class="phone-frame__rim" aria-hidden="true">
-                <img src="tty2.png" alt="" class="phone-frame__rim-texture" />
+                <img src="tty1.png" alt="" class="phone-frame__texture-left" />
+                <img src="stick.png" alt="" class="phone-frame__sticker" />
             </div>
             <div class="phone-frame__glass-edge" aria-hidden="true"></div>
             <div class="phone-frame__antenna phone-frame__antenna--tl" aria-hidden="true"></div>
