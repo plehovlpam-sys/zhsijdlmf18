@@ -102,26 +102,8 @@
             overflow: hidden;
         }
 
-        /* Трещина в левом верхнем углу */
-        .phone-frame__crack {
-            position: absolute;
-            top: -2%;
-            left: -2%;
-            width: 35%;
-            height: 35%;
-            pointer-events: none;
-            z-index: 8;
-            opacity: 0.7;
-        }
-
-        .phone-frame__crack svg {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-
-        /* Стикер справа */
-        .phone-frame__sticker {
+        /* Стикер 1 - справа */
+        .phone-frame__sticker-right {
             position: absolute;
             right: 0%;
             top: 0.6%;
@@ -133,7 +115,27 @@
             filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
         }
 
-        .phone-frame__sticker img {
+        .phone-frame__sticker-right img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 2px;
+        }
+
+        /* Стикер 2 - слева */
+        .phone-frame__sticker-left {
+            position: absolute;
+            left: -2%;
+            top: 8%;
+            width: 30%;
+            height: auto;
+            pointer-events: none;
+            z-index: 9;
+            transform: rotate(-8deg);
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        .phone-frame__sticker-left img {
             width: 100%;
             height: auto;
             display: block;
@@ -765,42 +767,14 @@
     <main class="site-shell">
         <section class="phone-frame">
             <div class="phone-frame__rim" aria-hidden="true">
-                <!-- Реалистичная трещина в левом верхнем углу (SVG) -->
-                <div class="phone-frame__crack">
-                    <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 2 L45 8 L38 32 L68 44 L55 78 L88 92 L74 128 L112 148 L98 178 L142 192" 
-                              stroke="rgba(80,80,80,0.6)" stroke-width="1.5" fill="none" />
-                        <path d="M45 8 L52 24 L38 32" 
-                              stroke="rgba(80,80,80,0.5)" stroke-width="1" fill="none" />
-                        <path d="M68 44 L82 56 L55 78" 
-                              stroke="rgba(80,80,80,0.5)" stroke-width="1" fill="none" />
-                        <path d="M88 92 L104 104 L74 128" 
-                              stroke="rgba(80,80,80,0.5)" stroke-width="1" fill="none" />
-                        <path d="M112 148 L126 160 L98 178" 
-                              stroke="rgba(80,80,80,0.5)" stroke-width="1" fill="none" />
-                        <!-- Тени для объема -->
-                        <path d="M2 2 L45 8 L38 32 L68 44 L55 78 L88 92 L74 128 L112 148 L98 178 L142 192" 
-                              stroke="rgba(0,0,0,0.3)" stroke-width="3" fill="none" opacity="0.4" />
-                        <!-- Мелкие трещинки -->
-                        <path d="M28 16 L20 28 L38 32" 
-                              stroke="rgba(80,80,80,0.4)" stroke-width="0.8" fill="none" />
-                        <path d="M62 36 L58 50 L68 44" 
-                              stroke="rgba(80,80,80,0.4)" stroke-width="0.8" fill="none" />
-                        <path d="M82 68 L76 82 L88 92" 
-                              stroke="rgba(80,80,80,0.4)" stroke-width="0.8" fill="none" />
-                        <path d="M105 130 L98 144 L112 148" 
-                              stroke="rgba(80,80,80,0.4)" stroke-width="0.8" fill="none" />
-                        <!-- Сколы -->
-                        <path d="M6 4 L8 12 L14 8 L18 14 L12 18 L8 12 L6 4Z" 
-                              fill="rgba(120,120,120,0.2)" stroke="rgba(80,80,80,0.3)" stroke-width="0.5" />
-                        <path d="M130 170 L138 176 L132 182 L126 176 L130 170Z" 
-                              fill="rgba(120,120,120,0.15)" stroke="rgba(80,80,80,0.3)" stroke-width="0.5" />
-                    </svg>
+                <!-- Стикер 1 - справа -->
+                <div class="phone-frame__sticker-right">
+                    <img src="stick.png" alt="" />
                 </div>
                 
-                <!-- Стикер справа -->
-                <div class="phone-frame__sticker">
-                    <img src="stick.png" alt="" />
+                <!-- Стикер 2 - слева -->
+                <div class="phone-frame__sticker-left">
+                    <img src="stic2.png" alt="" />
                 </div>
             </div>
             <div class="phone-frame__glass-edge" aria-hidden="true"></div>
