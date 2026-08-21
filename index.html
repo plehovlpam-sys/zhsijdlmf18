@@ -27,19 +27,20 @@
             width: 100%;
             height: 100vh;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
             overflow: hidden;
             position: relative;
-            transition: height 0.05s linear;
+            transition: none;
             padding: 0 16px;
+            background: black;
         }
         .svg-wrap svg {
             width: 100%;
             height: 100%;
-            object-fit: contain;
             display: block;
             background: black;
+            flex-shrink: 0;
         }
         .scroll-down {
             position: absolute;
@@ -143,30 +144,37 @@
 <script>
     (function() {
         const wrap = document.getElementById('svgWrap');
-        let startHeight = window.innerHeight;
-        let prevScroll = window.scrollY;
+        const svgObj = wrap.querySelector('object');
         let ticking = false;
+        let maxHeight = window.innerHeight;
+        const minHeight = 60;
 
-        function setFullHeight() {
-            wrap.style.height = window.innerHeight + 'px';
-            startHeight = window.innerHeight;
-        }
-        setFullHeight();
-
-        function updateHeight() {
+        function setHeight() {
             const scrollY = window.scrollY;
-            const maxH = window.innerHeight;
-            const minH = Math.max(100, window.innerHeight * 0.2);
-            let newH = maxH - scrollY;
-            if (newH < minH) newH = minH;
-            if (newH > maxH) newH = maxH;
+            let newH = maxHeight - scrollY;
+            if (newH < minHeight) newH = minHeight;
+            if (newH > maxHeight) newH = maxHeight;
             wrap.style.height = newH + 'px';
+            if (svgObj) {
+                svgObj.style.height = newH + 'px';
+            }
         }
+
+        function updateMaxHeight() {
+            maxHeight = window.innerHeight;
+            wrap.style.height = maxHeight + 'px';
+            if (svgObj) {
+                svgObj.style.height = maxHeight + 'px';
+            }
+            setHeight();
+        }
+
+        updateMaxHeight();
 
         window.addEventListener('scroll', function() {
             if (!ticking) {
                 window.requestAnimationFrame(function() {
-                    updateHeight();
+                    setHeight();
                     ticking = false;
                 });
                 ticking = true;
@@ -174,25 +182,21 @@
         });
 
         window.addEventListener('resize', function() {
-            setFullHeight();
-            updateHeight();
+            updateMaxHeight();
         });
 
         window.addEventListener('load', function() {
-            setFullHeight();
-            updateHeight();
+            updateMaxHeight();
         });
 
         window.addEventListener('orientationchange', function() {
             setTimeout(function() {
-                setFullHeight();
-                updateHeight();
+                updateMaxHeight();
             }, 200);
         });
 
         setTimeout(function() {
-            setFullHeight();
-            updateHeight();
+            updateMaxHeight();
         }, 50);
     })();
 </script>
